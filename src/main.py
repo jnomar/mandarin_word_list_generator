@@ -34,11 +34,14 @@ if __name__ == "__main__":
         else:
             histo[index] = [h]
 
+
+    count = 1
     # create output
     for i in range(20):
         if i in histo:
             for h in histo[i]:
-                output.append("{} {}{}({}) - {}\n".format(h[0], h[1], h[2], h[3], h[4]))
+                output.append("{}({}) {}{}({}) - {}\n".format(count, h[0], h[1], h[2], h[3], h[4]))
+                count += 1
 
     # write output to a file
     with open("word_list.txt", "w") as file: 
