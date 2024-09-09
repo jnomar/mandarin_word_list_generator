@@ -31,8 +31,16 @@ def get_frequent_hanzi(n):
             r = dictionary.definition_lookup(c["character"], "traditional")
             d = decomposer.decompose(r[0]["traditional"], 1)
             
-            hanzi.append({"index" : c["number"], "character" : r[0]["traditional"], "components" : d["components"], "pinyin" : c["pinyin"], "definition": c["meaning"]})
-            hanzi_dict[r[0]["traditional"]] = {"index" : c["number"], "components" : d["components"], "pinyin" : c["pinyin"], "definition": c["meaning"]} 
+            hanzi.append({"index" : c["number"], 
+                          "character" : r[0]["traditional"], 
+                          "components" : d["components"], 
+                          "pinyin" : c["pinyin"], 
+                          "definition": c["meaning"]})
+
+            hanzi_dict[r[0]["traditional"]] = {"index" : c["number"], 
+                                               "components" : d["components"], 
+                                               "pinyin" : c["pinyin"], 
+                                               "definition": c["meaning"]} 
         except Exception as e:
             print(e)
 
@@ -58,7 +66,10 @@ def add_component_deps(hanzi):
     included = {}
     characters = []
 
-    # should be a depth first search over the dependencies of the characters in hanzi array, given that there are no dependencies missing from the list already then the character will be added in the same order as its in the hanzi array
+    # should be a depth first search over the dependencies of the characters in 
+    # hanzi array, given that there are no dependencies missing from the list 
+    # already then the character will be added in the same order as its in the 
+    # hanzi array
     while(True):
         # make sure there is at least one character in the characters array
         if len(characters) == 0:
@@ -68,7 +79,8 @@ def add_component_deps(hanzi):
                 break
     
         h = characters.pop() 
-        unknown = get_unsatisfied_deps(included, decomposer.decompose(h, 1)["components"], h)
+        unknown = get_unsatisfied_deps(included, 
+                                       decomposer.decompose(h, 1)["components"], h)
 
         if len(unknown) == 0:
             output_characters.append(h)
@@ -95,7 +107,8 @@ def create_output(hanzi):
                     pinyin = definition[0]["pinyin"]
                     meaning = definition[0]["definition"]
 
-                output.append("{} {}({}) - {}\n".format(count, char, pinyin, meaning))
+                output.append("{} {}({}) - {}\n".format(count, 
+                                                        char, pinyin, meaning))
             except Exception as e:
                 meaning = decomposer.get_radical_meaning(char)
                 if meaning == None:
