@@ -1,12 +1,9 @@
 import argparse
-
-# import dictionary
 from hanzipy.decomposer import HanziDecomposer
-decomposer = HanziDecomposer()
-
-# import decomposer
 from hanzipy.dictionary import HanziDictionary
+
 dictionary = HanziDictionary()
+decomposer = HanziDecomposer()
 
 def load_hanzi_from_file(filename):
     hanzi = []
@@ -94,7 +91,6 @@ def add_component_deps(hanzi):
 def create_output(hanzi):
     output = []
     just_hanzi = []
-    count = 1
     for char in hanzi:
         if len(char) == 1:
             try:
@@ -107,17 +103,15 @@ def create_output(hanzi):
                     pinyin = definition[0]["pinyin"]
                     meaning = definition[0]["definition"]
 
-                output.append("{} {}({}) - {}\n".format(count, 
-                                                        char, pinyin, meaning))
+                output.append("{} ({}) - {}\n".format(char, pinyin, meaning))
             except Exception as e:
                 meaning = decomposer.get_radical_meaning(char)
                 if meaning == None:
                     meaning = ""
 
-                output.append("{} {} {}\n".format(count, char, meaning))
+                output.append("{} {}\n".format(char, meaning))
         else:
-            output.append("{} {}\n".format(count, char))
-        count += 1
+            output.append("{}\n".format(char))
 
     return output
 
@@ -132,24 +126,60 @@ def get_unsatisfied_deps(included, components, character):
 
     return unknown 
 
-def write_output(output, just_hanzi, file_name):
+def get_refold_dict(file_name):
+
+    with open(file_name, "r") as file:
+        lines = file.readlines()
+    
+    refold_d = {}
+
+    for line in lines:
+        s = line.split("\t")
+        refold_d[s[2]] = line
+    
+    return refold_d
+
+def get_output_line_word(line):
+    s = line.split(" ")
+    return s[0].strip()
+
+def add_back_refold_words(output, file_name):
+    refold_d = get_refold_dict(file_name)
+    
+    count = 0
+    for count in range(len(output)):
+        word = get_output_line_word(output[count])
+        if word in refold_d:
+            output[count] = refold_d[word] 
+    
+    return output 
+
+def write_output(output, file_name):
+    count = 0
+    known = 0
     # write output to a file
     with open(file_name, "w") as file: 
         for line in output:
+            if(count < 501):
+                count += 1
+                if line[0].isnumeric():
+                    known += 1
+
             file.write(line)
 
-    with open("{}_hanzi_list".format(file_name), "w") as file:
-        for line in just_hanzi:
-            file.write(line)
+    print("total:{}  known:{}  unknown:{}  known%:{}".format(
+        count, known, count-known, known/count))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("in_file")
+    parser.add_argument("refold_list")
     parser.add_argument("out_file")
     args = parser.parse_args()
     
     #hanzi, hanzi_dict = get_frequent_hanzi(3000) 
     hanzi = load_hanzi_from_file(args.in_file) 
-    hanzi = add_component_deps(hanzi) 
-    output = create_output(hanzi) 
-    write_output(output, hanzi, args.out_file) 
+    hanzi = add_component_deps(hanzi)
+    output = create_output(hanzi)
+    output = add_back_refold_words(output, args.refold_list)
+    write_output(output, args.out_file) 
