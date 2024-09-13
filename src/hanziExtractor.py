@@ -5,7 +5,7 @@ output = []
 
 for line in lines:
     s = line.split("\t")
-    output.append("{}\n".format(s[2]))
+    output.append("{}\n".format(s[3]))
 
 with open("output/refold_characters", "w") as file:
     for o in output:

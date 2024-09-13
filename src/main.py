@@ -134,8 +134,10 @@ def get_refold_dict(file_name):
     refold_d = {}
 
     for line in lines:
+        if(line[0] == "#"):
+            continue
         s = line.split("\t")
-        refold_d[s[2]] = line
+        refold_d[s[3]] = line
     
     return refold_d
 
@@ -160,6 +162,7 @@ def write_output(output, file_name):
     # write output to a file
     with open(file_name, "w") as file: 
         for line in output:
+            s = line.split("\t")
             if(count < 501):
                 count += 1
                 if line[0].isnumeric():
