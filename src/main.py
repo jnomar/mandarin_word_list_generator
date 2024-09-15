@@ -77,14 +77,21 @@ def add_component_deps(hanzi):
     
         h = characters.pop() 
         unknown = get_unsatisfied_deps(included, 
-                                       decomposer.decompose(h, 1)["components"], h)
+                                       decomposer.decompose(h, 1)["components"],
+                                       h)
 
         if len(unknown) == 0:
             output_characters.append(h)
             included[h] = True
         else:
             characters.append(h)
-            characters.extend(unknown)
+            # get rid of any duplicates like in (xiu4xie) which will be added 
+            h = {}
+            for c in unknown:
+                h[c] = True
+
+            for k in h.keys():
+                characters.append(k)
 
     return output_characters 
 
@@ -103,15 +110,17 @@ def create_output(hanzi):
                     pinyin = definition[0]["pinyin"]
                     meaning = definition[0]["definition"]
 
-                output.append("{} ({}) - {}\n".format(char, pinyin, meaning))
-            except Exception as e:
-                meaning = decomposer.get_radical_meaning(char)
-                if meaning == None:
-                    meaning = ""
+                pinyin = convert_pinyin(pinyin) 
 
-                output.append("{} {}\n".format(char, meaning))
+                output.append("component\t{}\t{}\t{}\n".format(char, pinyin, meaning))
+            except Exception as e:
+                pass
+                #meaning = decomposer.get_radical_meaning(char)
+                #if meaning == None:
+                #    meaning = ""
+                #output.append("c\t{}\t??\t{}\n".format(char, meaning))
         else:
-            output.append("{}\n".format(char))
+            output.append("component\t{}\n".format(char))
 
     return output
 
@@ -142,8 +151,20 @@ def get_refold_dict(file_name):
     return refold_d
 
 def get_output_line_word(line):
-    s = line.split(" ")
-    return s[0].strip()
+    s = line.split("\t")
+    return s[1].strip()
+
+def get_refold_word_info(w):
+    w = w.split('\t')
+    output = ""
+    
+    li = [3, 4, 5, 6, 7, 9, 10, 11, 12 ,13 ,14 ,15 ,16]
+
+    for i in range(3, len(w)):
+        if i in li:
+            output += "{}\t".format(w[i])
+
+    return "{}\n".format(output.strip())
 
 def add_back_refold_words(output, file_name):
     refold_d = get_refold_dict(file_name)
@@ -152,26 +173,58 @@ def add_back_refold_words(output, file_name):
     for count in range(len(output)):
         word = get_output_line_word(output[count])
         if word in refold_d:
-            output[count] = refold_d[word] 
+            output[count] = "refold\t{}".format(get_refold_word_info(refold_d[word])) 
+            #output[count] = refold_d[word] 
+            #print(refold_d[word])
     
     return output 
 
 def write_output(output, file_name):
-    count = 0
-    known = 0
     # write output to a file
     with open(file_name, "w") as file: 
         for line in output:
             s = line.split("\t")
-            if(count < 501):
-                count += 1
-                if line[0].isnumeric():
-                    known += 1
 
             file.write(line)
 
-    print("total:{}  known:{}  unknown:{}  known%:{}".format(
-        count, known, count-known, known/count))
+
+# converts from pinyin with the tone represented as number at the end of the
+# string i.e (yang2) to the tone above the appropriate vowel i.e (yang2) -> (yáng)
+def convert_pinyin(pinyin):
+    vowels = ['ai', 'ao', 'ei', 'ia', 'iao', 'ie', 'io', 'iu', 'ou', 'ua', 
+              'uai', 'ue', 'ui', 'uo', 'üa', 'üe', 'a', 'e', 'i', 'o', 'u', 'ü']
+
+    vowel = { 'a' : ['', 'ā', 'á', 'ǎ', 'à'],
+              'e' : ['', 'ē', 'é', 'ě', 'è'],
+              'i' : ['', 'ī', 'í', 'ǐ', 'ì'],
+              'o' : ['', 'ō', 'ó', 'ǒ', 'ò'],
+              'u' : ['', 'ū', 'ú', 'ǔ', 'ù'],
+              'ü' : ['', 'ǖ', 'ǘ', 'ǚ', 'ǜ']}
+
+    replacement = {'uai': 'a', 'iao': 'a', 'ai' : 'a', 'ao' : 'a', 'ei' : 'e', 
+                   'ia' : 'a', 'ie' : 'e', 'io' : 'o', 'iu' : 'u', 'ou' : 'o', 
+                   'ua' : 'a', 'ue' : 'e', 'ui' : 'i', 'uo' : 'o', 'üa' : 'a', 
+                   'üe' : 'e', 'a'  : 'a', 'e'  : 'e', 'i'  : 'i', 'o'  : 'o',
+                   'u'  : 'u', 'ü'  : 'ü'}
+
+    # copy the tone number and remove 
+    # it from the end of the pinyin
+    tone = pinyin[-1]
+    pinyin = pinyin[0:-1]
+
+    if tone == 5:
+        return pinyin
+
+    found_v = None
+    for v in vowels:
+        if v in pinyin: 
+            found_v = v
+            break
+
+    if found_v is not None:
+        pinyin = pinyin.replace(replacement[v], vowel[replacement[v]][int(tone)])
+
+    return pinyin
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
