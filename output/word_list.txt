@@ -1,15 +1,15 @@
 #separator:tab
 #html:true
 #notetype column:2
-#tags column:16
-1	HMM_component	丶	zhǔ	"dot" (Kangxi radical 3)
+#tags column:15
+1	HMM_component	丶	zhǔ	"dot" (Kangxi radical 3)										
 2	HMM_component	勹	bāo	to wrap/to cover
 3	HMM_component	勺	sháo	spoon/ladle
 4	HMM_refold	一	yī	one; once; a	numeral	[sound:yi1.mp3]	我有<b>一</b>本書。	Wǒ yǒu yī běn shū.<br>Sandhi: Wó yǒu yì běn shū.	I have a book.	[sound:part1s21.mp3]	"<img src=""0l5cdj7u2odrc.jpg"" />"			HSK HSK1
 5	HMM_component	冂	jiōng	upside-down box/wide (Kangxi radical 13)
 6	HMM_component	囗	wéi	enclosure
 7	HMM_refold	口	kǒu	mouth	classifier	[sound:kou3.mp3]	你為什麼不開口？	Nǐ wèishéme bù kāikǒu?	Why don't you talk?	[sound:azure-cefcd17a-f3ae9135-20ee85a0-286ad034-a3dfe6ce.mp3]	"<img src=""cl1ccjcu3or7k.jpg"" />"			HSK HSK3
-8	HMM_refold	日	rì	sun; day; date; time	abbreviation	[sound:ri4.mp3]	今天幾月幾<b>日</b>？	Jīntiān jǐ yuè jǐ rì?	What's the date today?	[sound:tmpwglaaz.mp3]	"<img src=""4674624.jpg"" />
+8	HMM_refold	日	rì	sun; day; date; time	abbreviation	[sound:ri4.mp3]	今天幾月幾<b>日</b>？	Jīntiān jǐ yuè jǐ rì?	What's the date today?	[sound:tmpwglaaz.mp3]	"<img src=""4674624.jpg"" />"			
 9	HMM_refold	白	bái	white; snowy; pure; bright; empty	adjective	[sound:bai2.mp3]	雪很<b>白</b>。	Xuě hěn bái.<br>Sandhi: Xué hěn bái.	Snow is very white.	[sound:tmpfb9q_g.mp3]	"<img src=""4941016.jpg"" />"			HSK HSK2
 10	HMM_component	戈	gē	dagger/axe
 11	HMM_refold	二	èr	two	numeral	[sound:er4.mp3]	下個月是<b>二</b>月。	Xià ge yuè shì èryuè.	Next month is February.	[sound:tmppruqfc.mp3]	"<img src=""5061588.jpg"" />"			HSK HSK1
