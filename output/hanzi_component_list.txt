@@ -1,0 +1,1 @@
+的 1:['白', '勺'] 2:['白', '勹', '丶'] <_io.TextIOWrapper name='<stderr>' mode='w' encoding='utf-8'>
