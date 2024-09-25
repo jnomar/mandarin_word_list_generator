@@ -35,9 +35,9 @@
 31	HMM_component	乚	yà	second of the ten heavenly stems
 32	HMM_refold	也	yě	also; too	adverb	[sound:ye3.mp3]	我<b>也</b>喜歡看書。	Wǒ yě xǐhuan kànshū.<br>Sandhi: Wǒ yé xǐhuan kànshū.	I also like to read.	[sound:part1s36.mp3]	"<img src=""8lbccjfu1403s.jpg"" />"			HSK HSK2
 33	HMM_refold	他	tā	he; him	pronoun	[sound:ta1.mp3]	<b>他</b>走路上班。	Tā zǒulù shàngbān.	He commutes to work on foot.	[sound:part1s279.mp3]	"<img src=""5l2c6j0u8ejos.jpg""><br>"			HSK HSK1
-34	HMM_component	彐	jì	pig snout (Kangxi radical 58)
 35	HMM_refold	門	mén	door; opening; gate	noun	[sound:men2.mp3]	他站在<b>門</b>口。	Tā zhàn zài ménkǒu.	He's standing at the entrance.	[sound:part1s850.mp3]	"<img src=""cl1ccjcu3or7k.jpg"" />"			HSK HSK2
 36	HMM_refold	我們	wǒmen	we; us	pronoun	[sound:wo3men.mp3]	<b>我們</b>在打包東西。	Wǒmen zài dǎbāo dōngxi.	We're packing our stuff.	[sound:tmpedfo0d.mp3]	"<img src=""4671535.jpg"">"			HSK HSK1
+1962	HMM_component	了	le	to be finished;to end;
 37	HMM_component	子	zǐ	son/child/seed
 38	HMM_refold	女	nǚ	woman; female	non-predicate adjective	[sound:nv3.mp3]	那個<b>女</b>人我認識。	Nàge nǚrén wǒ rènshi.	I know that woman.	[sound:f1fvf26s0o.mp3]	"<img src=""dl7fahdvf6vlk.jpg"" />"			HSK HSK2
 39	HMM_refold	好	hǎo	good	adjective	[sound:hao3.mp3]	你<b>好</b>！	Nǐ hǎo!<br>Sandhi: Ní hǎo!	Hello!	[sound:tmp1cctcn.mp3]	"<img src=""4866571.jpg"">"			HSK HSK1
